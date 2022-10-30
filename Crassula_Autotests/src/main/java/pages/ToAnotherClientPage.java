@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import wait.WaitExt;
 
 import static common.Constants.*;
@@ -13,12 +12,11 @@ public class ToAnotherClientPage extends BasePage {
     @FindBy(xpath = "//*[@id='amount']")
     private WebElement amountWebElement;
 
- //TODO: не автогенерируемый заголовок не находится автотестом, хотя в ручную в доме он ищется, поэтому убран выбор валюты
-    @FindBy(xpath = ".//div[@class='item-sum-control']//span[text()='EUR']")
-    public WebElement currencyWebElement;
+    @FindBy(xpath = ".//cl-internal-transfer[contains(@class,'ng-star-inserted')]//span[text()='EUR']")
+    private WebElement currencyWebElement;
 
     @FindBy(xpath = ".//span[text()='GBP']")
-    public WebElement gbpWebElement;
+    private WebElement gbpWebElement;
 
     @FindBy(xpath = ".//a[contains(text(),'To another client')]")
     private WebElement toAnotherClient;
@@ -41,13 +39,14 @@ public class ToAnotherClientPage extends BasePage {
 
     ToAnotherClientPage(WebDriver driver) {
         super(driver);
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(toAnotherClient));
+        waitPageload(toAnotherClient);
     }
 
     public ToAnotherClientPage transferToAnotherClient() {
         amountWebElement.sendKeys(AMOUNT);
         toAccountWebElement.sendKeys(ACCOUNT_NUMBER);
+        currencyWebElement.click();
+        gbpWebElement.click();
         descriptionWebElement.sendKeys(DESCRIPTION);
         setTemplateWebElement.sendKeys(TEMPLATE_NAME);
         WaitExt.sleep(2); //добавлен sleep из-за прогрузки кнопки
@@ -56,8 +55,7 @@ public class ToAnotherClientPage extends BasePage {
     }
 
     public TransferCompletedPage confirmClick() {
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(confirmButton));
+        waitPageload(confirmButton);
         confirmButton.click();
         return new TransferCompletedPage(driver);
     }

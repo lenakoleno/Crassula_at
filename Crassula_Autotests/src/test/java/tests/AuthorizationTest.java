@@ -15,20 +15,21 @@ public class AuthorizationTest extends SeleniumBaseTest {
         super.setUp();
     }
 
-    @Description(value = "test")
+    @Description(value = "Отправка и проверка платежа - успешный сценарий")
     @Test
-    public void test() {
+    public void paymentPositiveTest() {
         DashboardPage dashboardPage = loginPage
                 .login(ExistingUserEnum.CLIENT.username, ExistingUserEnum.CLIENT.pass);
         ToAnotherClientPage toAnotherClientPage = dashboardPage
-                .toAnotherClientClick()
+                .toAnotherClientTransition()
                 .transferToAnotherClient();
         toAnotherClientPage
                 .confirmClick()
                 .clickToDashboard();
-        dashboardPage.toHistoryClick();
-        LastTransactionPage lastTransactionPage = dashboardPage.toLastTransactionClick();
+        dashboardPage.toHistoryTransition();
+        LastTransactionPage lastTransactionPage = dashboardPage.toLastTransactionTransition();
         lastTransactionPage.assertMethod();
+        lastTransactionPage.closeWindowClick();
+        loginPage = lastTransactionPage.signOut();
     }
-
 }

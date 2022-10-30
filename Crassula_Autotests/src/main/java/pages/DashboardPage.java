@@ -3,20 +3,19 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class DashboardPage extends BasePage {
 
-    @FindBy(xpath = "/html/body/cl-app/div/cl-main-layout/header/div[2]/div[1]/cl-main-menu/cl-panel/cl-main-menu-links/a[2]")
+    @FindBy(xpath = ".//div[contains(@class, 'row hidden-m-down')]//a[@routerlink='/payments']")
     private WebElement paymentsTransfersWebElement;
 
-    @FindBy(xpath = "/html/body/cl-app/div/cl-main-layout/header/div[2]/div[1]/cl-main-menu/cl-panel/cl-main-menu-links/a[1]")
+    @FindBy(xpath = ".//div[contains(@class, 'row hidden-m-down')]//a[@routerlink='/dashboard']")
     private WebElement dashboardWebElement;
 
-    @FindBy(xpath = "/html/body/cl-app/div/cl-main-layout/cl-payments-layout/div/cl-secondary-menu/cl-panel/cl-tab-nav-bar/a[4]")
+    @FindBy(xpath = ".//a[@href='/payments/internal']")
     private WebElement toAnotherClientWebElement;
 
-    @FindBy(xpath = "/html/body/cl-app/div/cl-main-layout/cl-payments-layout/cl-payment-history/cl-panel/cl-panel-body/div/mat-table/mat-row[1]")
+    @FindBy(xpath = ".//mat-row[contains(@class, 'mat-row cdk-row ng-star-inserted')][1]")
     private WebElement lastTransactionWebElement;
 
     @FindBy(xpath = ".//div[contains(@class,'summary__icon')]")
@@ -24,33 +23,26 @@ public class DashboardPage extends BasePage {
 
     DashboardPage(WebDriver driver) {
         super(driver);
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(dashboardWebElement));
+        waitPageload(dashboardWebElement);
     }
 
-    public ToAnotherClientPage toAnotherClientClick() {
+    public ToAnotherClientPage toAnotherClientTransition() {
         paymentsTransfersWebElement.click();
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(toAnotherClientWebElement));
+        waitPageload(toAnotherClientWebElement);
         toAnotherClientWebElement.click();
         return new ToAnotherClientPage(driver);
     }
 
-    public ToAnotherClientPage toHistoryClick() {
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(dashboardWebElement));
+    public ToAnotherClientPage toHistoryTransition() {
+        waitPageload(dashboardWebElement);
         paymentsTransfersWebElement.click();
         return new ToAnotherClientPage(driver);
     }
 
-    public LastTransactionPage toLastTransactionClick()
-    {
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(lastTransactionWebElement));
+    public LastTransactionPage toLastTransactionTransition() {
+        waitPageload(lastTransactionWebElement);
         lastTransactionWebElement.click();
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(iconWebElement));
+        waitPageload(iconWebElement);
         return new LastTransactionPage(driver);
     }
-
 }

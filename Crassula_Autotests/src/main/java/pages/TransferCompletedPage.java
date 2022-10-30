@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class TransferCompletedPage extends BasePage {
 
@@ -15,8 +14,7 @@ public class TransferCompletedPage extends BasePage {
     }
 
     public TransferCompletedPage clickToDashboard() {
-        webDriverWait.until(
-                ExpectedConditions.visibilityOf(toDashboardButton));
+        waitPageload(toDashboardButton);
         toDashboardButton.click();
         return this;
     }
