@@ -17,30 +17,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>calculator-all-tests-suite</id>
-
-            <properties>
-                <suite.xml.file>${project.basedir}/src/test/resources/unit/tools/CalculatorAllTestsSuite.xml
-                </suite.xml.file>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>calculator-trigonometric-tests-suite</id>
-
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-
-            <properties>
-                <suite.xml.file>${project.basedir}/src/test/resources/unit/tools/CalculatorTrigonometricSuite.xml
-                </suite.xml.file>
-            </properties>
-        </profile>
-
-    </profiles>
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>
