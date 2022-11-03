@@ -14,12 +14,12 @@ public class SeleniumBaseTest {
     LoginPage loginPage;
 
     @BeforeSuite
-    public void setUpSuite() {
+    protected void setUpSuite() {
         WebDriverManager.chromedriver().setup();
     }
 
     @BeforeMethod
-    public void setUp() {
+    protected void setUp() {
         driver = new ChromeDriver();
         driver.navigate().to("https://client-avlasov.stage.crassu.la/sign-in");
         driver.manage().window().maximize();
@@ -27,7 +27,7 @@ public class SeleniumBaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown() {
+    protected void tearDown() {
         driver.close();
         driver.quit();
     }
